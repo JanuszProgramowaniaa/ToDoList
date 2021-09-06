@@ -1,8 +1,8 @@
 import ToDo from "./ToDo"
-
-
+import mongoose from "mongoose";
+import {v4 } from "uuid";
 interface Itodos{
-    id:string;
+    id:mongoose.Types.ObjectId;
     title: string;
     isCompleted:boolean;
     date: Date;
@@ -13,8 +13,8 @@ interface IToDoListProps{
 todos: Array<Itodos>;
 
 
-checkToDo:(action: string)=>void;
-deleteToDo:(action: string)=>void;
+checkToDo:(action: mongoose.Types.ObjectId)=>void;
+deleteToDo:(action: mongoose.Types.ObjectId)=>void;
 }
 
 
@@ -26,7 +26,7 @@ const ToDoList = (props: IToDoListProps) => {
     return (
        <div>
          {todos.map((todo)=>(
-             <ToDo key={todo.id} title={todo.title} checkToDo={checkToDo} deleteToDo={deleteToDo}  id={todo.id} isCompleted={todo.isCompleted} date={todo.date} />
+             <ToDo key={v4()} title={todo.title} checkToDo={checkToDo} deleteToDo={deleteToDo}  id={todo.id} isCompleted={todo.isCompleted} date={todo.date} />
          ))}
 
          

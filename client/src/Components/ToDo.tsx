@@ -1,16 +1,16 @@
 import React,{useState} from 'react'
 import { Card,CardContent,Typography,Container,IconButton } from '@material-ui/core';
 import{Check,Delete} from "@material-ui/icons"
-
+import mongoose from "mongoose";
 interface IToDoProps{
 title:string;
-id:string;
+id:mongoose.Types.ObjectId;
 isCompleted:boolean;
 date: Date;
 
 
-checkToDo:(action: string)=>void;
-deleteToDo:(action: string)=>void;
+checkToDo:(action: mongoose.Types.ObjectId)=>void;
+deleteToDo:(action: mongoose.Types.ObjectId)=>void;
 }
 
 
@@ -18,7 +18,6 @@ const ToDo = (props: IToDoProps) => {
      const title=props.title;
      const id=props.id;
      const isCompleted=props.isCompleted;
-     const date=props.date;
 
 
      const todoStyle= isCompleted? {textDecoration:"line-through",marginTop:35,background:"green"} :{textDecoration:"none",marginTop:35, background:"lightgray"}

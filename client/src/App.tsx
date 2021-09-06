@@ -2,12 +2,12 @@ import React, {useState} from "react"
 import ToDoForm from "./Components/ToDoForm"
 import ToDoList from "./Components/ToDoList"
 import './App.css';
+import mongoose from "mongoose";
 import {v4 } from "uuid";
-
 function App() {
 
 interface Itodos{
-id:string;
+id:mongoose.Types.ObjectId;
 title: string;
 isCompleted:boolean;
 date: Date;
@@ -16,20 +16,20 @@ date: Date;
 
 const [todos,setTodos]=useState<Array<Itodos>>([
 {
-  id: v4(),
+  id: new mongoose.Types.ObjectId(),
 title: "Zrób zakupy",
 isCompleted: false,
 date: new Date()
 },
 {
-  id: v4(),
+  id: new mongoose.Types.ObjectId(),
 title: "Pomóż babci",
 isCompleted: false,
 date: new Date()
 
 },
 {
-  id: v4(),
+  id: new mongoose.Types.ObjectId(),
 title: "Zapłać kurierowi",
 isCompleted: false,
 date: new Date()
@@ -39,7 +39,7 @@ date: new Date()
 
 const addTodo = (text :string)=>{
   const newTodo ={
-    id: v4(),
+    id: new mongoose.Types.ObjectId(),
     title: text,
     isCompleted: false,
     date: new Date("December 17, 1995 03:24:00")
@@ -47,7 +47,7 @@ const addTodo = (text :string)=>{
   setTodos([...todos,newTodo])
 }
 
-const checkToDo=(id:string)=>{
+const checkToDo=(id:mongoose.Types.ObjectId)=>{
   setTodos(
    todos.map((todo)=>{
      if(todo.id===id)todo.isCompleted=!todo.isCompleted;
@@ -73,7 +73,7 @@ const sortToDo=()=>{
   setTodos([...todos]);
 }
 
-const deleteToDo =(id:string)=>{
+const deleteToDo =(id:mongoose.Types.ObjectId)=>{
 setTodos(todos.filter(todo=>todo.id!==id))
 
 }
