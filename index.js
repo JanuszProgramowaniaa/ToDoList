@@ -1,17 +1,15 @@
 const express = require("express")
 const app =express();
-//parsery
-app.use(express.json());
-
+const cors = require('cors')
 const {port}= require('./config')
-
-
-
-
 const apiRouter=require('./routes/api')
 
 
 
+//parsery
+app.use(express.json());
+//fix cors
+app.use(cors())
 //db
 require('./db/mongoose')
 
@@ -28,5 +26,5 @@ app.use('/api',apiRouter)
 
 //Server
 app.listen(port,function(){
-console.log('serwer słucha.. http://losalhost:3000')
+console.log('serwer słucha.. http://localhost:'+port)
 })
