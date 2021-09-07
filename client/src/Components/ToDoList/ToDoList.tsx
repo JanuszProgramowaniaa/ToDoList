@@ -1,14 +1,9 @@
-import ToDo from "./ToDo"
+import ToDo from "../Todo/ToDo"
 import mongoose from "mongoose";
 import {v4 } from "uuid";
-interface Itodos{
-    _id:mongoose.Types.ObjectId;
-    title: string;
-    isCompleted:boolean;
-    date: Date;
-    }
-    
+import {Itodos} from "../../Interface/ToDo"
 
+    
 interface IToDoListProps{
 todos: Array<Itodos>;
 
@@ -26,7 +21,7 @@ const ToDoList = (props: IToDoListProps) => {
     return (
        <div>
          {todos.map((todo)=>(
-             <ToDo key={v4()} title={todo.title} checkToDo={checkToDo} deleteToDo={deleteToDo}  _id={todo._id} isCompleted={todo.isCompleted} date={todo.date} />
+             <ToDo key={v4()} title={todo.title} checkToDo={checkToDo} deleteToDo={deleteToDo}  _id={todo._id} isCompleted={todo.isCompleted}  />
          ))}
 
          

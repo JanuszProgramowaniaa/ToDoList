@@ -5,10 +5,9 @@ module.exports ={
 async saveTodo(req,res){
    const title=req.body.title;
    const isCompleted=req.body.isCompleted;
-   const date=req.body.date;
    let todo ;
 try{
-     todo = new Todo({title,isCompleted,date})
+     todo = new Todo({title,isCompleted})
   await todo.save();
 } catch(err){
    return res.status(422).json({message: err.message})

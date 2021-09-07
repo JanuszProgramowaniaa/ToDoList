@@ -1,12 +1,8 @@
 import { Card,CardContent,Typography,Container,IconButton } from '@material-ui/core';
 import{Check,Delete} from "@material-ui/icons"
 import mongoose from "mongoose";
-interface IToDoProps{
-_id:mongoose.Types.ObjectId;
-title:string;
-isCompleted:boolean;
-date: Date;
-
+import {Itodos} from "../../Interface/ToDo"
+interface IToDoProps extends Itodos{
 
 checkToDo:(action: mongoose.Types.ObjectId)=>void;
 deleteToDo:(action: mongoose.Types.ObjectId)=>void;

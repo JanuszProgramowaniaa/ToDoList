@@ -1,94 +1,80 @@
-import React, {useState,useEffect} from "react"
-import ToDoForm from "./Components/ToDoForm"
-import ToDoList from "./Components/ToDoList"
-import './App.css';
-import mongoose from "mongoose";
+import {useState,useEffect} from "react"
+import ToDoForm from "./Components/ToDoForm/ToDoForm"
+import ToDoList from "./Components/ToDoList/ToDoList"
 import {v4 } from "uuid";
-import axios from "axios"
+import {Itodos} from "./Interface/ToDo"
+import mongoose from "mongoose";
 import {AxiosResponse} from "axios"
+import axios from "./axios"
+
 function App() {
-
-interface Itodos{
-_id:mongoose.Types.ObjectId;
-title: string;
-isCompleted:boolean;
-date: Date;
-}
+  
+   const [todos,setTodos]=useState<Array<Itodos>>([])
 
 
-const [todos,setTodos]=useState<Array<Itodos>>([])
+
+///Funkcje związane z Axiosem
 
 useEffect(()=>{
-  axios.get("http://localhost:3001/api/Todo")
+  axios.get("/Todo")
   .then(res=>{
     setTodos(res.data)
-    
+
   })
   .catch(err=>{
     console.log(err)
   })
 
 },[])
-console.log(todos)
 
-const addTodo = (text :string)=>{
+ const addTodo = (text :string)=>{
   const newTodo ={
     _id: new mongoose.Types.ObjectId(),
     title: text,
     isCompleted: false,
-    date: new Date()
   }
-  axios.post("http://localhost:3001/api/Todo",newTodo)
+  axios.post("/Todo",newTodo)
   .then((res: AxiosResponse) => {
     setTodos([...todos,res.data])
 });
 }
 
-const checkToDo=(_id:mongoose.Types.ObjectId)=>{
+ const checkToDo=(_id:mongoose.Types.ObjectId)=>{
   setTodos(
    todos.map((todo)=>{
      if(todo._id===_id)todo.isCompleted=!todo.isCompleted; 
-     if(todo.isCompleted===true) {
-       //musi być !!! console.log(todo);
-       todo.date=new Date();
-       
+     if(todo.isCompleted===true) {   
      }
-     
-
-    axios.put("http://localhost:3001/api/Todo/"+todo._id,todo)
+    axios.put("/Todo/"+todo._id,todo)
      return todo;
    })
   );
 };
 
-
-const sortToDo=()=>{
-  
-  todos.sort((a:any,b:any)=>{
-    return b.date - a.date
-    
-      
-
-
-  })
-  
-
-  setTodos([...todos]);
-}
-
-const deleteToDo =(_id:mongoose.Types.ObjectId)=>{
-  axios.delete("http://localhost:3001/api/Todo/"+_id)
+ const deleteToDo =(_id:mongoose.Types.ObjectId)=>{
+  axios.delete("/Todo/"+_id)
   setTodos(todos.filter(todo=>todo._id!==_id))
 
 }
 
-const generate= ()=>{
- 
-  addTodo(v4());
+///Koniec Funkcji związanych z Axiosem
 
+///Pomniejsze funkcje
 
+const sortToDo=()=>{
+  todos.sort((a:any,b:any)=>{
+    return b.isCompleted - a.isCompleted;
+  })
+  setTodos([...todos]);
 }
 
+const generate= ()=>{
+
+  addTodo(v4());
+
+  
+}
+//Koniec pomniejszych funkcji
 
 
   return (
